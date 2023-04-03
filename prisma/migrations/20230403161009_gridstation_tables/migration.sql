@@ -15,7 +15,8 @@ CREATE TABLE "User" (
 CREATE TABLE "GridStation" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "coords" geometry(Point, 4326) NOT NULL,
+    "latitude" DOUBLE PRECISION NOT NULL,
+    "longitude" DOUBLE PRECISION NOT NULL,
     "status" TEXT,
     "contact" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -27,9 +28,6 @@ CREATE TABLE "GridStation" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
-
--- CreateIndex
-CREATE INDEX "location_idx" ON "GridStation" USING GIST ("coords");
 
 -- AddForeignKey
 ALTER TABLE "GridStation" ADD CONSTRAINT "GridStation_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

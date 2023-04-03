@@ -7,12 +7,13 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
+  id          String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   email       String        @unique
   password    String
   name        String?
@@ -23,15 +24,14 @@ model User {
 }
 
 model GridStation {
-  id          Int                                  @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
-  coords      Unsupported("geometry(Point, 4326)")
+  latitude    Float
+  longitude   Float
   status      String?
   contact     String?
-  createdAt   DateTime                             @default(now())
-  updatedAt   DateTime                             @updatedAt
-  createdBy   User                                 @relation(fields: [createdById], references: [id])
-  createdById Int
-
-  @@index([coords], name: "location_idx", type: Gist)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdById String   @db.Uuid
 }
