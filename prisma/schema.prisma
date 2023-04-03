@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int           @id @default(autoincrement())
+  email       String        @unique
+  password    String
+  name        String?
+  role        String        @default("USER")
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  GridStation GridStation[]
+}
+
+model GridStation {
+  id          Int                                  @id @default(autoincrement())
+  name        String
+  coords      Unsupported("geometry(Point, 4326)")
+  status      String?
+  contact     String?
+  createdAt   DateTime                             @default(now())
+  updatedAt   DateTime                             @updatedAt
+  createdBy   User                                 @relation(fields: [createdById], references: [id])
+  createdById Int
+
+  @@index([coords], name: "location_idx", type: Gist)
+}
