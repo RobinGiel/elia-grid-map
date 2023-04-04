@@ -28,9 +28,6 @@ export async function PUT(req: NextRequest) {
     cookies,
   });
 
-  const { data, error } = await supabase
-    .from("gridstations")
-    .update(req.body)
-    .eq("id", req.body.id);
+  const { data, error } = await supabase.from("gridstations").update(req.body);
   return NextResponse.json({ data, error });
 }

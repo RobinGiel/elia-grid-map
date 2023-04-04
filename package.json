@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "db-stop": "npx supabase stop --backup",
-    "db-start": "npx supabase start"
+    "db-start": "npx supabase start",
+    "update-types": "npx supabase gen types typescript --db-url $DIRECT_URL > types/supabase.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
