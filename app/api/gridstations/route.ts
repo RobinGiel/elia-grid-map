@@ -1,10 +1,10 @@
 import { createRouteHandlerSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { headers, cookies } from "next/headers";
 
-import type { Database } from "@/types/supabase";
+import type { Database } from "@/lib/database.types";
 
-export async function GET(req: NextRequest) {
+export async function GET(req: Request) {
   const supabase = createRouteHandlerSupabaseClient<Database>({
     headers,
     cookies,
@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ data, error });
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   const supabase = createRouteHandlerSupabaseClient<Database>({
     headers,
     cookies,
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ data, error });
 }
 
-export async function PUT(req: NextRequest) {
+export async function PUT(req: Request) {
   const supabase = createRouteHandlerSupabaseClient<Database>({
     headers,
     cookies,

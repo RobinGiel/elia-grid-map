@@ -1,4 +1,4 @@
-import { Database } from "@/types/supabase";
+import { Database } from "@/lib/database.types";
 import { createClient } from "@supabase/supabase-js";
 
 export default createClient<Database>(

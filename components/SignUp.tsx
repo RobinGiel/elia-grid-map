@@ -20,7 +20,7 @@ export default function Register() {
         </div>
 
         <div className="mt-5">
-          <form>
+          <form action="/api/form" method="post">
             <div className="grid gap-y-4">
               <div>
                 <label htmlFor="email" className="block text-sm mb-2 d">

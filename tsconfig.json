@@ -23,8 +23,8 @@
     "paths": {
       "@/*": ["./*"],
       "@components/*": ["components/*"],
-      "@types/*": ["types/*"],
       "@utils/*": ["utils/*"],
+      "@lib/*": ["lib/*"],
       "@assets/*": ["public/assets/*"],
     }
   },
