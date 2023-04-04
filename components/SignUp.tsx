@@ -1,20 +1,20 @@
 import Link from "next/link";
 import { Logo } from "./ui";
 
-export default function Login() {
+export default function Register() {
   return (
-    <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm ">
+    <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
       <div className="p-4 sm:p-7">
         <div className="text-center">
           <Logo />
-          <h1 className="block text-2xl font-bold text-gray-800 ">Sign in</h1>
+          <h1 className="block text-2xl font-bold text-gray-800">Sign up</h1>
           <p className="mt-2 text-sm text-gray-600 ">
-            {`Don't have an account yet?`}
+            Already have an account?
             <Link
               className="text-flushOrange-600 decoration-2 hover:underline font-medium"
-              href="/register"
+              href="/"
             >
-              Sign up here
+              Sign in here
             </Link>
           </p>
         </div>
@@ -23,7 +23,7 @@ export default function Login() {
           <form>
             <div className="grid gap-y-4">
               <div>
-                <label htmlFor="email" className="block text-sm mb-2 ">
+                <label htmlFor="email" className="block text-sm mb-2 d">
                   Email address
                 </label>
                 <div className="relative">
@@ -31,7 +31,7 @@ export default function Login() {
                     type="email"
                     id="email"
                     name="email"
-                    className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
+                    className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500   "
                     required
                     aria-describedby="email-error"
                   />
@@ -55,25 +55,16 @@ export default function Login() {
                   Please include a valid email address so we can get back to you
                 </p>
               </div>
-
               <div>
-                <div className="flex justify-between items-center">
-                  <label htmlFor="password" className="block text-sm mb-2">
-                    Password
-                  </label>
-                  <Link
-                    className="text-sm text-flushOrange-600 decoration-2 hover:underline font-medium"
-                    href="/reset"
-                  >
-                    Forgot password?
-                  </Link>
-                </div>
+                <label htmlFor="password" className="block text-sm mb-2 d">
+                  Password
+                </label>
                 <div className="relative">
                   <input
                     type="password"
                     id="password"
                     name="password"
-                    className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500 "
+                    className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500   "
                     required
                     aria-describedby="password-error"
                   />
@@ -100,9 +91,9 @@ export default function Login() {
 
               <button
                 type="submit"
-                className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-flushOrange-500 text-white hover:bg-flushOrange-600 focus:outline-none focus:ring-2 focus:ring-flushOrange-500 focus:ring-offset-2 transition-all text-sm"
+                className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-flushOrange-500 text-white hover:bg-flushOrange-600 focus:outline-none focus:ring-2 focus:ring-flushOrange-500 focus:ring-offset-2 transition-all text-sm "
               >
-                Sign in
+                Sign up
               </button>
             </div>
           </form>
