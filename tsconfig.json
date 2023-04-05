@@ -23,6 +23,7 @@
     "paths": {
       "@/*": ["./*"],
       "@components/*": ["components/*"],
+      "@ui/*": ["components/ui/*"],
       "@utils/*": ["utils/*"],
       "@lib/*": ["lib/*"],
       "@assets/*": ["public/assets/*"],

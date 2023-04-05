@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const forms = require("@tailwindcss/forms");
 const brandColor = "#ff7300";
 module.exports = {
   content: [
@@ -31,5 +32,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [forms],
 };

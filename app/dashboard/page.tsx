@@ -1,9 +1,3 @@
-import { Login } from "@/components";
-
 export default function Dashboard() {
-  return (
-    <main>
-      <Login />
-    </main>
-  );
+  return <main>{"THIS IS THE DASH"}</main>;
 }

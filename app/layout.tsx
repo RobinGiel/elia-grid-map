@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Roboto } from "next/font/google";
-import SupabaseProvider from "./supabase-context";
+import SupabaseProvider from "@/components/SupabaseProvider";
 
 export const metadata = {
   title: "50hertz Grid Planner",
