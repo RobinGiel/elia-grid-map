@@ -6,7 +6,7 @@ import { Logo, Spinner } from "@ui/index";
 import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
 import { Warning } from "@ui/icons";
-import supabase from "@utils/supabase";
+import { useSupabase } from "./SupabaseProvider";
 
 const SignUpSchema = object().shape({
   email: string().email("Invalid email").required("Required"),
@@ -17,6 +17,7 @@ export default function Register() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { supabase } = useSupabase();
 
   async function signUp(formData: { email: string; password: string }) {
     setIsLoading(true);
@@ -105,7 +106,6 @@ export default function Register() {
                         name="password"
                         className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
                       />
-
                       <div
                         className={
                           errors.password && touched.password
