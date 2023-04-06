@@ -24,7 +24,10 @@ export default function SupabaseProvider({
   useEffect(() => {
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(() => {
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === "PASSWORD_RECOVERY") {
+        router.push("/update-password");
+      }
       router.refresh();
     });
 
