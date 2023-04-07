@@ -6,7 +6,7 @@ import { Logo, Spinner } from "@ui/index";
 import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
 import { Warning } from "@ui/icons";
-import { useSupabase } from "./SupabaseProvider";
+import { useSupabase } from "../SupabaseProvider";
 import { useRouter } from "next/navigation";
 
 const SignInSchema = object().shape({

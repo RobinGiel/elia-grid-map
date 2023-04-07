@@ -1,6 +1,6 @@
+import SupabaseProvider from "@components/SupabaseProvider";
 import "./globals.css";
 import { Roboto } from "next/font/google";
-import { SupabaseProvider } from "@components/index";
 
 export const metadata = {
   title: "50hertz Grid Planner",
@@ -21,7 +21,9 @@ export default function RootLayout({
     <>
       <html lang="en" className={`${roboto.className} h-full`}>
         <body className="flex h-full items-center py-16">
-          <SupabaseProvider>{children}</SupabaseProvider>
+          <main className="w-full max-w-md mx-auto p-6">
+            <SupabaseProvider>{children}</SupabaseProvider>
+          </main>
         </body>
       </html>
     </>
