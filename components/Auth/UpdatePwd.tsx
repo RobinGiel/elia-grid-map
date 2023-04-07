@@ -17,6 +17,7 @@ export default function UpdatePwd() {
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { supabase } = useSupabase();
+  const router = useRouter();
 
   async function updatePassword(formData: { password: string }) {
     setIsLoading(true);
@@ -30,7 +31,7 @@ export default function UpdatePwd() {
       setSuccessMsg("Password updated successfully.");
       setIsLoading(false);
       await supabase.auth.signOut();
-      window.location.href = "/";
+      router.push("/");
     }
   }
 
