@@ -10,6 +10,7 @@ const Auth = () => {
   if (view === VIEWS.UPDATE_PASSWORD) {
     return <UpdatePwd />;
   }
+
   return <Login />;
 };
 

@@ -6,7 +6,7 @@ import { Spinner } from "@ui/index";
 import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
 import { Warning } from "@ui/icons";
-import { useSupabase } from "./SupabaseProvider";
+import { useSupabase } from "../SupabaseProvider";
 
 const ResetPasswordSchema = object().shape({
   email: string().email("Invalid email").required("Required"),
@@ -22,7 +22,7 @@ export default function ResetPwd() {
     setIsLoading(true);
     const { error } = await supabase.auth.resetPasswordForEmail(
       formData.email,
-      { redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}}` }
+      { redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/update-password/` }
     );
     if (error) {
       setErrorMsg(error.message);

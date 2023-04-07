@@ -1,5 +1,5 @@
-import { Auth } from "@components/index";
+import { Login } from "@Auth/index";
 
 export default function Home() {
-  return <Auth />;
+  return <Login />;
 }

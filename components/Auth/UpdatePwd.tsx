@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { Spinner } from "@ui/index";
 import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
 import { Warning } from "@ui/icons";
 import { useSupabase } from "../SupabaseProvider";
+import { useRouter } from "next/navigation";
 
 const UpdatePasswordSchema = object().shape({
   password: string().required("Required"),
@@ -27,8 +27,10 @@ export default function UpdatePwd() {
       setErrorMsg(error.message);
       setIsLoading(false);
     } else {
-      setSuccessMsg("Check your email for the password reset link.");
+      setSuccessMsg("Password updated successfully.");
       setIsLoading(false);
+      await supabase.auth.signOut();
+      window.location.href = "/";
     }
   }
 
@@ -39,15 +41,7 @@ export default function UpdatePwd() {
           <h1 className="block text-2xl font-bold text-gray-800 ">
             Update Password
           </h1>
-          <p className="mt-2 text-sm text-gray-600 ">
-            Remember your password?
-            <Link
-              className="text-flushOrange-600 decoration-2 hover:underline font-medium"
-              href="/"
-            >
-              Sign in here
-            </Link>
-          </p>
+          .
         </div>
 
         <div className="mt-5">

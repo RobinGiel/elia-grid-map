@@ -27,6 +27,7 @@
       "@utils/*": ["utils/*"],
       "@lib/*": ["lib/*"],
       "@assets/*": ["public/assets/*"],
+      "@Auth/*": ["components/Auth/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

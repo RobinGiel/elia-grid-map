@@ -41,21 +41,8 @@ export default function SupabaseProvider({
   useEffect(() => {
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, _session) => {
-      // if (event !== EVENTS.PASSWORD_RECOVERY) {
-      //   router.refresh();
-      // }
-      switch (event) {
-        case EVENTS.PASSWORD_RECOVERY:
-          setView(VIEWS.UPDATE_PASSWORD);
-          break;
-        case EVENTS.SIGNED_OUT:
-        case EVENTS.USER_UPDATED:
-        case EVENTS.INITIAL_SESSION:
-          setView(VIEWS.SIGN_IN);
-          break;
-        default:
-      }
+    } = supabase.auth.onAuthStateChange(() => {
+      router.refresh();
     });
 
     return () => {
