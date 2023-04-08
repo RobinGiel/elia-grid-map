@@ -17,21 +17,19 @@ export default function ResetPwd() {
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { supabase } = useSupabase();
-  const redirectUrl = `${process.env.NEXT_PUBLIC_URL}/update-password/`;
 
   async function resetPassword(formData: { email: string }) {
     setIsLoading(true);
     const { error } = await supabase.auth.resetPasswordForEmail(
       formData.email,
-      { redirectTo: redirectUrl }
+      { redirectTo: `${window.location.origin}/update-password/` }
     );
     if (error) {
       setErrorMsg(error.message);
-      setIsLoading(false);
     } else {
       setSuccessMsg("Check your email for the password reset link.");
-      setIsLoading(false);
     }
+    setIsLoading(false);
   }
 
   return (
