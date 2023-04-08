@@ -22,7 +22,7 @@ export default function ResetPwd() {
     setIsLoading(true);
     const { error } = await supabase.auth.resetPasswordForEmail(
       formData.email,
-      { redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/update-password/` }
+      { redirectTo: `${window.location.origin}/update-password/` }
     );
     if (error) {
       setErrorMsg(error.message);
