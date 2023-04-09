@@ -6,7 +6,7 @@ import { Logo, Spinner } from "@ui/index";
 import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
 import { Warning } from "@ui/icons";
-import { useSupabase } from "../SupabaseProvider";
+import { useSupabase, useToast } from "@components/index";
 import { useRouter } from "next/navigation";
 
 const SignInSchema = object().shape({
@@ -19,6 +19,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { supabase } = useSupabase();
+  const toast = useToast();
   const router = useRouter();
 
   async function signIn(formData: { email: string; password: string }) {
@@ -33,6 +34,7 @@ export default function Login() {
       setIsLoading(false);
     } else {
       router.push("/dashboard");
+      toast.success("You are now logged in.");
     }
   }
 

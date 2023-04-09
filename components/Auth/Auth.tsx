@@ -1,6 +1,6 @@
 "use client";
 
-import { useSupabase, VIEWS } from "../SupabaseProvider";
+import { useSupabase, VIEWS } from "@components/index";
 import Login from "./Login";
 import UpdatePwd from "./UpdatePwd";
 

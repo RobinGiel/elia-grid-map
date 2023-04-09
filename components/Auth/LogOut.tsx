@@ -1,6 +1,6 @@
 "use client";
 
-import { useSupabase } from "../SupabaseProvider";
+import { useSupabase } from "@components/index";
 import { useRouter } from "next/navigation";
 
 export default function LogOut() {

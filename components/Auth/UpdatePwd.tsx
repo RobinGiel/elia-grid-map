@@ -5,7 +5,7 @@ import { Spinner } from "@ui/index";
 import { Field, Form, Formik } from "formik";
 import { object, string } from "yup";
 import { Warning } from "@ui/icons";
-import { useSupabase } from "../SupabaseProvider";
+import { useSupabase, useToast } from "@components/index";
 import { useRouter } from "next/navigation";
 
 const UpdatePasswordSchema = object().shape({
@@ -17,6 +17,7 @@ export default function UpdatePwd() {
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { supabase } = useSupabase();
+  const toast = useToast();
   const router = useRouter();
 
   async function updatePassword(formData: { password: string }) {
@@ -30,8 +31,8 @@ export default function UpdatePwd() {
     } else {
       setSuccessMsg("Password updated successfully.");
       setIsLoading(false);
-      await supabase.auth.signOut();
-      router.push("/");
+      router.push("/dashboard");
+      toast.success("Password updated successfully.");
     }
   }
 

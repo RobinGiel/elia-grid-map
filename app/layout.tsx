@@ -1,6 +1,6 @@
-import SupabaseProvider from "@components/SupabaseProvider";
 import "./globals.css";
 import { Roboto } from "next/font/google";
+import { ToastProvider, SupabaseProvider } from "@components/index";
 
 export const revalidate = 0;
 
@@ -24,7 +24,9 @@ export default function RootLayout({
       <html lang="en" className={`${roboto.className} h-full`}>
         <body className="flex h-full items-center py-16">
           <main className="w-full max-w-md mx-auto p-6">
-            <SupabaseProvider>{children}</SupabaseProvider>
+            <ToastProvider>
+              <SupabaseProvider>{children}</SupabaseProvider>
+            </ToastProvider>
           </main>
         </body>
       </html>
