@@ -225,10 +225,34 @@ model users {
   mfa_factors                 mfa_factors[]
   sessions                    sessions[]
   grid_stations               GridStation[]
-  updated_grid_stations       GridStation[] @relation(name: "updated_grid_stations")
+  updated_grid_stations       GridStation[] @relation("updated_grid_stations")
 
   @@index([instance_id])
   @@schema("auth")
+}
+
+model GridStation {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String
+  latitude      Float
+  longitude     Float
+  status        String?
+  contact       String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  created_by_id String   @db.Uuid
+  user_id       String   @db.Uuid
+  created_by    users    @relation(fields: [created_by_id], references: [id])
+  updated_by    users    @relation("updated_grid_stations", fields: [user_id], references: [id])
+
+  @@schema("public")
+}
+
+model profiles {
+  id    String  @id @db.Uuid
+  email String? @db.VarChar(255)
+
+  @@schema("public")
 }
 
 enum aal_level {
@@ -251,21 +275,4 @@ enum factor_type {
   webauthn
 
   @@schema("auth")
-}
-
-model GridStation {
-  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name          String
-  latitude      Float
-  longitude     Float
-  status        String?
-  contact       String?
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
-  created_by    users    @relation(fields: [created_by_id], references: [id])
-  created_by_id String   @db.Uuid
-  updated_by    users    @relation(name: "updated_grid_stations", fields: [user_id], references: [id])
-  user_id       String   @db.Uuid
-
-  @@schema("public")
 }

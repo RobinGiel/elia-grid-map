@@ -1,5 +1,10 @@
+import { CenterBox } from "@components/index";
 import { SignUp } from "@Auth/index";
 
 export default function Register() {
-  return <SignUp />;
+  return (
+    <CenterBox>
+      <SignUp />
+    </CenterBox>
+  );
 }

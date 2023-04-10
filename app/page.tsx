@@ -1,5 +1,10 @@
 import { Login } from "@Auth/index";
+import { CenterBox } from "@components/index";
 
 export default function Home() {
-  return <Login />;
+  return (
+    <CenterBox>
+      <Login />
+    </CenterBox>
+  );
 }

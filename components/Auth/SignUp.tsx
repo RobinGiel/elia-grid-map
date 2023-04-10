@@ -141,7 +141,7 @@ export default function Register() {
           {errorMsg && (
             <>
               <div
-                className="bg-red-50 border border-red-200 text-sm text-red-600 rounded-md p-4"
+                className="bg-red-50 border border-red-200 text-sm text-red-600 mt-5 rounded-md p-4"
                 role="alert"
               >
                 {errorMsg}

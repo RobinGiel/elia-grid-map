@@ -22,12 +22,10 @@ export default function RootLayout({
   return (
     <>
       <html lang="en" className={`${roboto.className} h-full`}>
-        <body className="flex h-full items-center py-16">
-          <main className="w-full max-w-md mx-auto p-6">
-            <ToastProvider>
-              <SupabaseProvider>{children}</SupabaseProvider>
-            </ToastProvider>
-          </main>
+        <body>
+          <ToastProvider>
+            <SupabaseProvider>{children}</SupabaseProvider>
+          </ToastProvider>
         </body>
       </html>
     </>

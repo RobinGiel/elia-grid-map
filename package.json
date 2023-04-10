@@ -9,7 +9,7 @@
     "lint": "next lint",
     "db-stop": "npx supabase stop --backup",
     "db-start": "npx supabase start",
-    "update-types": "npx supabase gen types typescript --db-url $DIRECT_URL > lib/database.types.ts"
+    "update-types": "npx supabase gen types typescript --db-url $DIRECT_URL --schema public > lib/database.types.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -24,6 +24,7 @@
     "eslint-config-next": "^13.3.0",
     "formik": "^2.2.9",
     "next": "^13.3.0",
+    "preline": "^1.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-toastify": "^9.1.2",

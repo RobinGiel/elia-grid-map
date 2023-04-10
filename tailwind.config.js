@@ -1,11 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 const forms = require("@tailwindcss/forms");
+const preline = require("preline/plugin");
 const brandColor = "#ff7300";
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "node_modules/preline/dist/*.js",
   ],
   theme: {
     extend: {
@@ -32,5 +34,5 @@ module.exports = {
       },
     },
   },
-  plugins: [forms],
+  plugins: [forms, preline],
 };
