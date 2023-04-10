@@ -1,4 +1,4 @@
-import { PrelineProvider } from "@components/index";
+import { PrelineProvider, SupabaseProvider } from "@components/index";
 
 export default function DashboardLayout({
   children,
@@ -6,8 +6,10 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <PrelineProvider>
-      <body className="bg-gray-50 dark:bg-slate-900">{children}</body>
-    </PrelineProvider>
+    <SupabaseProvider>
+      <PrelineProvider>
+        <body className="bg-gray-50 dark:bg-slate-900">{children}</body>
+      </PrelineProvider>
+    </SupabaseProvider>
   );
 }

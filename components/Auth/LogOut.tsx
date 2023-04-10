@@ -3,7 +3,7 @@
 import { useSupabase } from "@components/index";
 import { useRouter } from "next/navigation";
 
-export default function LogOut() {
+export default function LogOut({ children }: { children: React.ReactNode }) {
   const { supabase } = useSupabase();
   const router = useRouter();
   const signOut = async () => {
@@ -13,7 +13,7 @@ export default function LogOut() {
 
   return (
     <>
-      <button onClick={signOut}>Sign out</button>
+      <div onClick={signOut}>{children}</div>
     </>
   );
 }

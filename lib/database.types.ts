@@ -49,15 +49,15 @@ export interface Database {
       }
       profiles: {
         Row: {
-          email: string | null
+          email: string
           id: string
         }
         Insert: {
-          email?: string | null
+          email: string
           id: string
         }
         Update: {
-          email?: string | null
+          email?: string
           id?: string
         }
       }

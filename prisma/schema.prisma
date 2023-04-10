@@ -249,8 +249,8 @@ model GridStation {
 }
 
 model profiles {
-  id    String  @id @db.Uuid
-  email String? @db.VarChar(255)
+  id    String @id @db.Uuid
+  email String @db.VarChar(255)
 
   @@schema("public")
 }

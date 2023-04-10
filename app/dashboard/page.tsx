@@ -1,8 +1,22 @@
 import { Logo } from "@components/ui";
 import LogOut from "@Auth/LogOut";
 import Image from "next/image";
+import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { headers, cookies } from "next/headers";
+import { Database } from "@lib/database.types";
+
+export const revalidate = 0;
 
 export default async function Dashboard() {
+  const supabase = createServerComponentSupabaseClient<Database>({
+    headers,
+    cookies,
+  });
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <>
       {/* <!-- ========== HEADER ========== --> */}
@@ -125,30 +139,32 @@ export default async function Dashboard() {
                       Signed in as
                     </p>
                     <p className="text-sm font-medium text-gray-800 dark:text-gray-300">
-                      johndoe@test.com
+                      {user?.email}
                     </p>
                   </div>
                   <div className="mt-2 py-2 first:pt-0 last:pb-0">
-                    <a
-                      className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                      href="#"
-                    >
-                      <svg
-                        width="15"
-                        height="15"
-                        viewBox="0 0 15 15"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
+                    <LogOut>
+                      <a
+                        className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                        href="#"
                       >
-                        <path
-                          d="M3 1C2.44771 1 2 1.44772 2 2V13C2 13.5523 2.44772 14 3 14H10.5C10.7761 14 11 13.7761 11 13.5C11 13.2239 10.7761 13 10.5 13H3V2L10.5 2C10.7761 2 11 1.77614 11 1.5C11 1.22386 10.7761 1 10.5 1H3ZM12.6036 4.89645C12.4083 4.70118 12.0917 4.70118 11.8964 4.89645C11.7012 5.09171 11.7012 5.40829 11.8964 5.60355L13.2929 7H6.5C6.22386 7 6 7.22386 6 7.5C6 7.77614 6.22386 8 6.5 8H13.2929L11.8964 9.39645C11.7012 9.59171 11.7012 9.90829 11.8964 10.1036C12.0917 10.2988 12.4083 10.2988 12.6036 10.1036L14.8536 7.85355C15.0488 7.65829 15.0488 7.34171 14.8536 7.14645L12.6036 4.89645Z"
-                          fill="currentColor"
-                          fillRule="evenodd"
-                          clip-rule="evenodd"
-                        ></path>
-                      </svg>
-                      <LogOut />
-                    </a>
+                        <svg
+                          width="15"
+                          height="15"
+                          viewBox="0 0 15 15"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M3 1C2.44771 1 2 1.44772 2 2V13C2 13.5523 2.44772 14 3 14H10.5C10.7761 14 11 13.7761 11 13.5C11 13.2239 10.7761 13 10.5 13H3V2L10.5 2C10.7761 2 11 1.77614 11 1.5C11 1.22386 10.7761 1 10.5 1H3ZM12.6036 4.89645C12.4083 4.70118 12.0917 4.70118 11.8964 4.89645C11.7012 5.09171 11.7012 5.40829 11.8964 5.60355L13.2929 7H6.5C6.22386 7 6 7.22386 6 7.5C6 7.77614 6.22386 8 6.5 8H13.2929L11.8964 9.39645C11.7012 9.59171 11.7012 9.90829 11.8964 10.1036C12.0917 10.2988 12.4083 10.2988 12.6036 10.1036L14.8536 7.85355C15.0488 7.65829 15.0488 7.34171 14.8536 7.14645L12.6036 4.89645Z"
+                            fill="currentColor"
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                          ></path>
+                        </svg>
+                        Sign out
+                      </a>
+                    </LogOut>
                   </div>
                 </div>
               </div>
@@ -204,8 +220,8 @@ export default async function Dashboard() {
                 <path
                   d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 />
               </svg>
             </li>
@@ -244,7 +260,7 @@ export default async function Dashboard() {
             <li>
               <a
                 className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-md dark:bg-gray-900 hover:bg-gray-900 dark:text-white"
-                href="javascript:;"
+                href="#"
               >
                 <svg
                   className="w-3.5 h-3.5"
@@ -270,7 +286,7 @@ export default async function Dashboard() {
             <li className="hs-accordion" id="users-accordion">
               <a
                 className="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white"
-                href="javascript:;"
+                href="#"
               >
                 <svg
                   className="w-3.5 h-3.5"
@@ -294,8 +310,8 @@ export default async function Dashboard() {
                   <path
                     d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
                   ></path>
                 </svg>
                 <svg
@@ -309,8 +325,8 @@ export default async function Dashboard() {
                   <path
                     d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
                   ></path>
                 </svg>
               </a>
@@ -326,7 +342,7 @@ export default async function Dashboard() {
                   <li className="hs-accordion" id="users-accordion-sub-1">
                     <a
                       className="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white"
-                      href="javascript:;"
+                      href="#"
                     >
                       Sub Menu 1
                       <svg
@@ -340,8 +356,8 @@ export default async function Dashboard() {
                         <path
                           d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11"
                           stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
+                          strokeWidth="2"
+                          strokeLinecap="round"
                         ></path>
                       </svg>
                       <svg
@@ -355,8 +371,8 @@ export default async function Dashboard() {
                         <path
                           d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5"
                           stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
+                          strokeWidth="2"
+                          strokeLinecap="round"
                         ></path>
                       </svg>
                     </a>
@@ -369,7 +385,7 @@ export default async function Dashboard() {
                         <li>
                           <a
                             className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                            href="javascript:;"
+                            href="#"
                           >
                             Link 1
                           </a>
@@ -377,7 +393,7 @@ export default async function Dashboard() {
                         <li>
                           <a
                             className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                            href="javascript:;"
+                            href="#"
                           >
                             Link 2
                           </a>
@@ -385,7 +401,7 @@ export default async function Dashboard() {
                         <li>
                           <a
                             className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                            href="javascript:;"
+                            href="#"
                           >
                             Link 3
                           </a>
@@ -396,7 +412,7 @@ export default async function Dashboard() {
                   <li className="hs-accordion" id="users-accordion-sub-2">
                     <a
                       className="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white"
-                      href="javascript:;"
+                      href="#"
                     >
                       Sub Menu 2
                       <svg
@@ -410,8 +426,8 @@ export default async function Dashboard() {
                         <path
                           d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11"
                           stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
+                          strokeWidth="2"
+                          strokeLinecap="round"
                         ></path>
                       </svg>
                       <svg
@@ -425,8 +441,8 @@ export default async function Dashboard() {
                         <path
                           d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5"
                           stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
+                          strokeWidth="2"
+                          strokeLinecap="round"
                         ></path>
                       </svg>
                     </a>
@@ -439,7 +455,7 @@ export default async function Dashboard() {
                         <li>
                           <a
                             className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                            href="javascript:;"
+                            href="#"
                           >
                             Link 1
                           </a>
@@ -447,7 +463,7 @@ export default async function Dashboard() {
                         <li>
                           <a
                             className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                            href="javascript:;"
+                            href="#"
                           >
                             Link 2
                           </a>
@@ -455,7 +471,7 @@ export default async function Dashboard() {
                         <li>
                           <a
                             className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                            href="javascript:;"
+                            href="#"
                           >
                             Link 3
                           </a>
@@ -470,7 +486,7 @@ export default async function Dashboard() {
             <li className="hs-accordion" id="account-accordion">
               <a
                 className="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white"
-                href="javascript:;"
+                href="#"
               >
                 <svg
                   className="w-3.5 h-3.5"
@@ -498,8 +514,8 @@ export default async function Dashboard() {
                   <path
                     d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
                   ></path>
                 </svg>
                 <svg
@@ -513,8 +529,8 @@ export default async function Dashboard() {
                   <path
                     d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
                   ></path>
                 </svg>
               </a>
@@ -527,7 +543,7 @@ export default async function Dashboard() {
                   <li>
                     <a
                       className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                      href="javascript:;"
+                      href="#"
                     >
                       Link 1
                     </a>
@@ -535,7 +551,7 @@ export default async function Dashboard() {
                   <li>
                     <a
                       className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                      href="javascript:;"
+                      href="#"
                     >
                       Link 2
                     </a>
@@ -543,7 +559,7 @@ export default async function Dashboard() {
                   <li>
                     <a
                       className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                      href="javascript:;"
+                      href="#"
                     >
                       Link 3
                     </a>
@@ -555,7 +571,7 @@ export default async function Dashboard() {
             <li className="hs-accordion" id="projects-accordion">
               <a
                 className="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white"
-                href="javascript:;"
+                href="#"
               >
                 <svg
                   className="w-3.5 h-3.5"
@@ -580,8 +596,8 @@ export default async function Dashboard() {
                   <path
                     d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
                   ></path>
                 </svg>
                 <svg
@@ -595,8 +611,8 @@ export default async function Dashboard() {
                   <path
                     d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
                   ></path>
                 </svg>
               </a>
@@ -609,7 +625,7 @@ export default async function Dashboard() {
                   <li>
                     <a
                       className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                      href="javascript:;"
+                      href="#"
                     >
                       Link 1
                     </a>
@@ -617,7 +633,7 @@ export default async function Dashboard() {
                   <li>
                     <a
                       className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                      href="javascript:;"
+                      href="#"
                     >
                       Link 2
                     </a>
@@ -625,7 +641,7 @@ export default async function Dashboard() {
                   <li>
                     <a
                       className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                      href="javascript:;"
+                      href="#"
                     >
                       Link 3
                     </a>
@@ -637,7 +653,7 @@ export default async function Dashboard() {
             <li>
               <a
                 className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300"
-                href="javascript:;"
+                href="#"
               >
                 <svg
                   className="w-3.5 h-3.5"
@@ -656,7 +672,7 @@ export default async function Dashboard() {
             <li>
               <a
                 className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300"
-                href="javascript:;"
+                href="#"
               >
                 <svg
                   className="w-3.5 h-3.5"
@@ -722,8 +738,8 @@ export default async function Dashboard() {
                 <path
                   d="M11.2792 1.64001L5.63273 7.28646C5.43747 7.48172 5.43747 7.79831 5.63273 7.99357L11.2792 13.64"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 />
               </svg>
               Back to examples
