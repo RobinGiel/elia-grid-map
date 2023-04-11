@@ -9,56 +9,42 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      GridStation: {
+      gridstations: {
         Row: {
           contact: string | null
-          created_at: string
-          created_by_id: string
+          created_at: string | null
+          created_by: string | null
           id: string
           latitude: number
           longitude: number
-          name: string
+          name: string | null
           status: string | null
-          updated_at: string
-          user_id: string
+          updated_at: string | null
+          updated_by: string | null
         }
         Insert: {
           contact?: string | null
-          created_at?: string
-          created_by_id: string
+          created_at?: string | null
+          created_by?: string | null
           id?: string
           latitude: number
           longitude: number
-          name: string
+          name?: string | null
           status?: string | null
-          updated_at: string
-          user_id: string
+          updated_at?: string | null
+          updated_by?: string | null
         }
         Update: {
           contact?: string | null
-          created_at?: string
-          created_by_id?: string
+          created_at?: string | null
+          created_by?: string | null
           id?: string
           latitude?: number
           longitude?: number
-          name?: string
+          name?: string | null
           status?: string | null
-          updated_at?: string
-          user_id?: string
-        }
-      }
-      profiles: {
-        Row: {
-          email: string
-          id: string
-        }
-        Insert: {
-          email: string
-          id: string
-        }
-        Update: {
-          email?: string
-          id?: string
+          updated_at?: string | null
+          updated_by?: string | null
         }
       }
     }

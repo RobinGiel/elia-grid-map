@@ -17,6 +17,10 @@ export default async function Dashboard() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const gridstations = await supabase.from("gridstations").select("*");
+
+  console.log("THESE ARE THE GRID STATIONS", gridstations);
+
   return (
     <>
       {/* <!-- ========== HEADER ========== --> */}

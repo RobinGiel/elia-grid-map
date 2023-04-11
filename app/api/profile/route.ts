@@ -12,7 +12,7 @@ export async function GET() {
     headers,
     cookies,
   });
-  const { data } = await supabase.from("Gridstation").select("*");
+  const { data } = await supabase.from("GridStation").select("*");
 
   return NextResponse.json(data);
 }
