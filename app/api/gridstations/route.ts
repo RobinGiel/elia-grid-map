@@ -3,26 +3,22 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { headers, cookies } from "next/headers";
 
 import type { Database } from "@lib/database.types";
+import { NextResponse } from "next/server";
 
-export async function GET(_req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: Request) {
+  const { gridstation } = await req.json();
   const supabase = createRouteHandlerSupabaseClient<Database>({
     headers,
     cookies,
   });
-  const { data, error } = await supabase.from("gridstations").select("*");
-  return res.json({ data, error });
+  const { data, error } = await supabase
+    .from("gridstations")
+    .insert(gridstation);
+  return NextResponse.json({ data, error });
 }
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-  const supabase = createRouteHandlerSupabaseClient<Database>({
-    headers,
-    cookies,
-  });
-  const { data, error } = await supabase.from("gridstations").insert(req.body);
-  return res.json({ data, error });
-}
-
-export async function PUT(req: NextApiRequest, res: NextApiResponse) {
+export async function PUT(req: Request) {
+  const { gridstation } = await req.json();
   const supabase = createRouteHandlerSupabaseClient<Database>({
     headers,
     cookies,
@@ -30,7 +26,7 @@ export async function PUT(req: NextApiRequest, res: NextApiResponse) {
 
   const { data, error } = await supabase
     .from("gridstations")
-    .update(req.body)
-    .match({ id: req.body.id });
-  return res.json({ data, error });
+    .update(gridstation)
+    .match({ id: gridstation.id });
+  return NextResponse.json({ data, error });
 }
