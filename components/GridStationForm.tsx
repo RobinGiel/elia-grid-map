@@ -33,7 +33,7 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
     setIsLoading(true);
     const { error } = await supabase.from("gridstations").insert([
       {
-        location: `ST_SetSRID(ST_MakePoint(${formData.long}, ${formData.lat}), 4326)`,
+        location: `POINT(${formData.lat} ${formData.long})`,
         name: formData.name,
         contact: formData.contact,
         status: formData.status,
