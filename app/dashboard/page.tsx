@@ -4,6 +4,7 @@ import Image from "next/image";
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { headers, cookies } from "next/headers";
 import { Database } from "@lib/database.types";
+import { GridStationForm } from "@components/index";
 
 export const revalidate = 0;
 
@@ -692,6 +693,7 @@ export default async function Dashboard() {
               </a>
             </li>
           </ul>
+          <GridStationForm userId={user!.id} />
         </nav>
       </div>
       {/* <!-- End Sidebar --> */}
