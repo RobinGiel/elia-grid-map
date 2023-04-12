@@ -6,8 +6,8 @@ import { FC, useState } from "react";
 import { useSupabase, useToast } from "@components/index";
 
 const GridStationSchema = object().shape({
-  lat: string().required("Required"),
-  long: string().required("Required"),
+  lat: number().required("Required").integer(),
+  long: number().required("Required").integer(),
   name: string().required("Required"),
   contact: string(),
   status: string(),
@@ -33,8 +33,7 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
     setIsLoading(true);
     const { error } = await supabase.from("gridstations").insert([
       {
-        latitude: formData.lat,
-        longitude: formData.long,
+        location: `ST_SetSRID(ST_MakePoint(${formData.long}, ${formData.lat}), 4326)`,
         name: formData.name,
         contact: formData.contact,
         status: formData.status,
@@ -76,7 +75,6 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
                 </label>
                 <div className="relative">
                   <Field
-                    type="string"
                     id="latitude"
                     name="latitude"
                     className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
@@ -111,7 +109,6 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
                 </label>
                 <div className="relative">
                   <Field
-                    type="string"
                     id="longitude"
                     name="longitude"
                     className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
@@ -181,7 +178,7 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
                 </label>
                 <div className="relative">
                   <Field
-                    type="string"
+                    type="select"
                     id="contact"
                     name="contact"
                     className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
@@ -198,11 +195,17 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
                 </label>
                 <div className="relative">
                   <Field
-                    type="string"
+                    as="select"
                     id="status"
                     name="status"
                     className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
-                  />
+                  >
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="under_construction">
+                      Under Construction
+                    </option>
+                  </Field>
                 </div>
               </div>
 

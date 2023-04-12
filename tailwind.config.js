@@ -3,6 +3,7 @@ const forms = require("@tailwindcss/forms");
 const preline = require("preline/plugin");
 const brandColor = "#ff7300";
 module.exports = {
+  darkMode: "class",
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",

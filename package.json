@@ -9,7 +9,7 @@
     "lint": "next lint",
     "db-stop": "npx supabase stop --backup",
     "db-start": "npx supabase start",
-    "update-types": "npx supabase gen types typescript --db-url $DIRECT_URL --schema public > lib/database.types.ts"
+    "update-types": "bash ./updateTypes.sh"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

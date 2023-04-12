@@ -15,8 +15,7 @@ export interface Database {
           created_at: string | null
           created_by: string | null
           id: string
-          latitude: number
-          longitude: number
+          location: unknown
           name: string | null
           status: string | null
           updated_at: string | null
@@ -27,8 +26,7 @@ export interface Database {
           created_at?: string | null
           created_by?: string | null
           id?: string
-          latitude: number
-          longitude: number
+          location: unknown
           name?: string | null
           status?: string | null
           updated_at?: string | null
@@ -39,8 +37,7 @@ export interface Database {
           created_at?: string | null
           created_by?: string | null
           id?: string
-          latitude?: number
-          longitude?: number
+          location?: unknown
           name?: string | null
           status?: string | null
           updated_at?: string | null
