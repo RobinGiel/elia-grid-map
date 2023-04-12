@@ -1,4 +1,8 @@
-import { PrelineProvider, SupabaseProvider } from "@components/index";
+import {
+  OlMapProvider,
+  PrelineProvider,
+  SupabaseProvider,
+} from "@components/index";
 
 export default function DashboardLayout({
   children,
@@ -8,7 +12,9 @@ export default function DashboardLayout({
   return (
     <SupabaseProvider>
       <PrelineProvider>
-        <body className="bg-gray-50 dark:bg-slate-900">{children}</body>
+        <OlMapProvider>
+          <body className="bg-gray-50 dark:bg-slate-900">{children}</body>
+        </OlMapProvider>
       </PrelineProvider>
     </SupabaseProvider>
   );

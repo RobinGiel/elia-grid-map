@@ -2,7 +2,7 @@
 import { Field, Form, Formik } from "formik";
 import { object, string, number } from "yup";
 import { Spinner, Warning } from "@ui/index";
-import { FC, useState } from "react";
+import { useState } from "react";
 import { useSupabase, useToast } from "@components/index";
 
 const GridStationSchema = object().shape({
@@ -17,7 +17,7 @@ interface GridStationFormProps {
   userId: string | null;
 }
 
-const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
+export default function GridStationForm({ userId }: GridStationFormProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { supabase } = useSupabase();
   const toast = useToast();
@@ -61,7 +61,7 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
           long: "",
           name: "",
           contact: "",
-          status: "",
+          status: "active",
         }}
         validationSchema={GridStationSchema}
         onSubmit={addGridstation}
@@ -199,7 +199,6 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
                 <div className="relative">
                   <Field
                     as="select"
-                    defaultValue="active"
                     id="status"
                     name="status"
                     className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
@@ -227,6 +226,4 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
       </Formik>
     </>
   );
-};
-
-export default GridStationForm;
+}
