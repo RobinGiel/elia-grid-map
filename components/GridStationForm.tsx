@@ -6,8 +6,8 @@ import { FC, useState } from "react";
 import { useSupabase, useToast } from "@components/index";
 
 const GridStationSchema = object().shape({
-  lat: number().required("Required").integer(),
-  long: number().required("Required").integer(),
+  lat: string().required("Required"),
+  long: string().required("Required"),
   name: string().required("Required"),
   contact: string(),
   status: string(),
@@ -18,18 +18,20 @@ interface GridStationFormProps {
 }
 
 const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { supabase } = useSupabase();
   const toast = useToast();
 
-  async function addGridstation(formData: {
-    lat: number;
-    long: number;
-    name: string;
-    contact: string;
-    status: string;
-  }) {
+  async function addGridstation(
+    formData: {
+      lat: string;
+      long: string;
+      name: string;
+      contact: string;
+      status: string;
+    },
+    { resetForm }: { resetForm: () => void }
+  ) {
     setIsLoading(true);
     const { error } = await supabase.from("gridstations").insert([
       {
@@ -46,6 +48,7 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
       setIsLoading(false);
     } else {
       setIsLoading(false);
+      resetForm();
       toast.success("Gridstation added successfully.");
     }
   }
@@ -54,8 +57,8 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
     <>
       <Formik
         initialValues={{
-          lat: 0,
-          long: 0,
+          lat: "",
+          long: "",
           name: "",
           contact: "",
           status: "",
@@ -68,16 +71,16 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
             <div className="grid gap-y-4">
               <div>
                 <label
-                  htmlFor="latitude"
+                  htmlFor="lat"
                   className="block text-sm mb-2 dark:text-white "
                 >
                   Latitude
                 </label>
                 <div className="relative">
                   <Field
-                    id="latitude"
-                    name="latitude"
-                    className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
+                    id="lat"
+                    name="lat"
+                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
                   />
 
                   <div
@@ -102,16 +105,16 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
 
               <div>
                 <label
-                  htmlFor="longitude"
+                  htmlFor="long"
                   className="block text-sm mb-2 dark:text-white "
                 >
                   Longitude
                 </label>
                 <div className="relative">
                   <Field
-                    id="longitude"
-                    name="longitude"
-                    className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
+                    id="long"
+                    name="long"
+                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
                   />
 
                   <div
@@ -146,7 +149,7 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
                     type="string"
                     id="name"
                     name="name"
-                    className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
+                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
                   />
 
                   <div
@@ -181,7 +184,7 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
                     type="select"
                     id="contact"
                     name="contact"
-                    className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
+                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
                   />
                 </div>
               </div>
@@ -196,9 +199,10 @@ const GridStationForm: FC<GridStationFormProps> = ({ userId }) => {
                 <div className="relative">
                   <Field
                     as="select"
+                    defaultValue="active"
                     id="status"
                     name="status"
-                    className="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
+                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-flushOrange-500 focus:ring-flushOrange-500"
                   >
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
