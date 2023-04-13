@@ -1,60 +1,48 @@
 "use client";
-
 import "ol/ol.css";
-
-import { Feature, Map, Overlay, View } from "ol/index";
-import { OSM, Vector as VectorSource } from "ol/source";
 import React, { useEffect, useRef } from "react";
-import { useOlMap } from "./OlMapProvider";
+import { Feature, Map, View } from "ol/index";
+import { OSM, Vector as VectorSource } from "ol/source";
 import { Point } from "ol/geom";
 import { useGeographic } from "ol/proj";
 import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
 
 type Props = {
-  zoom: number;
   place: [number, number];
 };
 
-export default function OlMap({ zoom, place }: Props) {
-  useGeographic();
-  const { map, setMap, removeMap } = useOlMap();
-  const mapId = useRef<HTMLDivElement>(null);
+export default function OlMap({ place }: Props) {
+  const ref = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<Map | null>(null);
 
-  const point = new Point(place);
+  useGeographic();
 
   useEffect(() => {
-    if (!mapId.current) throw Error("mapId is not assigned");
-
-    const theMap = new Map({
-      view: new View({
-        center: place,
-        zoom: 8,
-      }),
-      layers: [
-        new TileLayer({
-          source: new OSM(),
+    const point = new Point(place);
+    if (ref.current && !mapRef.current) {
+      mapRef.current = new Map({
+        target: ref.current,
+        view: new View({
+          center: place,
+          zoom: 8,
         }),
-        new VectorLayer({
-          source: new VectorSource({
-            features: [new Feature(point)],
+        layers: [
+          new TileLayer({
+            source: new OSM(),
           }),
-          style: {
-            "circle-radius": 9,
-            "circle-fill-color": "red",
-          },
-        }),
-      ],
-    });
+          new VectorLayer({
+            source: new VectorSource({
+              features: [new Feature(point)],
+            }),
+            style: {
+              "circle-radius": 9,
+              "circle-fill-color": "red",
+            },
+          }),
+        ],
+      });
+    }
+  }, [place, ref, mapRef]);
 
-    theMap.setTarget(mapId.current);
-    setMap(theMap);
-
-    return () => {
-      if (!theMap) return;
-      theMap.setTarget(undefined);
-      removeMap();
-    };
-  }, [place, zoom]);
-
-  return <div ref={mapId} className="w-full h-[800px]"></div>;
+  return <div ref={ref} className="w-full h-[800px]"></div>;
 }
