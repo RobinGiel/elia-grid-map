@@ -22,12 +22,6 @@ export default function OlMap({ place }: Props) {
 
   useGeographic();
 
-  const svg =
-    '<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5" stroke="currentColor">' +
-    '<path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />' +
-    '<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />' +
-    "</svg>";
-
   useEffect(() => {
     const point = new Point(place);
 
@@ -73,7 +67,7 @@ export default function OlMap({ place }: Props) {
         removeMap();
       }
     };
-  }, [place, mapRef, map, setMap, removeMap, svg]);
+  }, [place, mapRef, map, setMap, removeMap]);
 
   return <div ref={mapRef} className="w-full h-[calc(92vh-75px)]"></div>;
 }
