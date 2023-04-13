@@ -299,7 +299,7 @@ export default async function Dashboard() {
       {/* <!-- End Sidebar --> */}
 
       {/* <!-- Content --> */}
-      <div className="w-full pt-10 h-full px-4 sm:px-6 md:px-8 lg:pl-72">
+      <div className="w-full pt-4 h-full px-4 sm:px-6 md:px-8 lg:pl-72">
         {/* <!-- Page Heading --> */}
         <OlMap place={[4.3517103, 50.8499966]} />
         {/* <!-- End Page Heading --> */}

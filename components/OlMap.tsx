@@ -53,5 +53,5 @@ export default function OlMap({ place }: Props) {
     };
   }, [place, mapRef, map, setMap, removeMap]);
 
-  return <div ref={mapRef} className="w-full h-[85vh]"></div>;
+  return <div ref={mapRef} className="w-full h-[calc(95vh-95px)]"></div>;
 }
