@@ -2,10 +2,12 @@
 import "ol/ol.css";
 import React, { useEffect, useRef } from "react";
 import { Feature, Map, View } from "ol/index";
-import { OSM, Vector as VectorSource } from "ol/source";
+import OSM from "ol/source/OSM";
+import TileLayer from "ol/layer/Tile";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
 import { Point } from "ol/geom";
 import { useGeographic } from "ol/proj";
-import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
 import { useOlMap } from "./OlMapProvider";
 
 type Props = {
@@ -13,16 +15,16 @@ type Props = {
 };
 
 export default function OlMap({ place }: Props) {
-  const ref = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
   const { map, setMap, removeMap } = useOlMap();
 
   useGeographic();
 
   useEffect(() => {
     const point = new Point(place);
-    if (ref.current && !map) {
+    if (mapRef.current && !map) {
       let theMap = new Map({
-        target: ref.current,
+        target: mapRef.current,
         view: new View({
           center: place,
           zoom: 12,
@@ -49,7 +51,7 @@ export default function OlMap({ place }: Props) {
         removeMap();
       }
     };
-  }, [place, ref, map, setMap, removeMap]);
+  }, [place, mapRef, map, setMap, removeMap]);
 
-  return <div ref={ref} className="w-full h-[800px]"></div>;
+  return <div ref={mapRef} className="w-full h-[800px]"></div>;
 }
