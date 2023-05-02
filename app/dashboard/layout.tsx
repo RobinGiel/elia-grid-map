@@ -12,9 +12,7 @@ export default function DashboardLayout({
   return (
     <SupabaseProvider>
       <PrelineProvider>
-        <OlMapProvider>
-          <body className="bg-gray-50 dark:bg-slate-900">{children}</body>
-        </OlMapProvider>
+        <OlMapProvider>{children}</OlMapProvider>
       </PrelineProvider>
     </SupabaseProvider>
   );
