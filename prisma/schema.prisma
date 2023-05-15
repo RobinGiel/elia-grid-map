@@ -1,6 +1,7 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["multiSchema", "postgresqlExtensions"]
+  previewFeatures = ["multiSchema", "clientExtensions", "postgresqlExtensions"]
+  binaryTargets   = ["native"]
 }
 
 datasource db {
@@ -11,6 +12,7 @@ datasource db {
   schemas    = ["auth", "public"]
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model audit_log_entries {
   instance_id String?   @db.Uuid
   id          String    @id @db.Uuid
@@ -22,6 +24,26 @@ model audit_log_entries {
   @@schema("auth")
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model flow_state {
+  id                     String                @id @db.Uuid
+  user_id                String?               @db.Uuid
+  auth_code              String
+  code_challenge_method  code_challenge_method
+  code_challenge         String
+  provider_type          String
+  provider_access_token  String?
+  provider_refresh_token String?
+  created_at             DateTime?             @db.Timestamptz(6)
+  updated_at             DateTime?             @db.Timestamptz(6)
+  authentication_method  String
+
+  @@index([auth_code], map: "idx_auth_code")
+  @@index([user_id, authentication_method], map: "idx_user_id_auth_method")
+  @@schema("auth")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model identities {
   id              String
   user_id         String    @db.Uuid
@@ -39,6 +61,7 @@ model identities {
   @@schema("auth")
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model instances {
   id              String    @id @db.Uuid
   uuid            String?   @db.Uuid
@@ -49,6 +72,7 @@ model instances {
   @@schema("auth")
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model mfa_amr_claims {
   session_id            String   @db.Uuid
   created_at            DateTime @db.Timestamptz(6)
@@ -61,6 +85,7 @@ model mfa_amr_claims {
   @@schema("auth")
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model mfa_challenges {
   id          String      @id @db.Uuid
   factor_id   String      @db.Uuid
@@ -72,6 +97,7 @@ model mfa_challenges {
   @@schema("auth")
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model mfa_factors {
   id             String           @id @db.Uuid
   user_id        String           @db.Uuid
@@ -88,6 +114,7 @@ model mfa_factors {
   @@schema("auth")
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model refresh_tokens {
   instance_id String?   @db.Uuid
   id          BigInt    @id @default(autoincrement())
@@ -104,10 +131,10 @@ model refresh_tokens {
   @@index([instance_id, user_id])
   @@index([parent])
   @@index([session_id, revoked])
-  @@index([token])
   @@schema("auth")
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model saml_providers {
   id                String        @id @db.Uuid
   sso_provider_id   String        @db.Uuid
@@ -123,6 +150,7 @@ model saml_providers {
   @@schema("auth")
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model saml_relay_states {
   id              String        @id @db.Uuid
   sso_provider_id String        @db.Uuid
@@ -139,12 +167,14 @@ model saml_relay_states {
   @@schema("auth")
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model schema_migrations {
   version String @id @db.VarChar(255)
 
   @@schema("auth")
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model sessions {
   id             String           @id @db.Uuid
   user_id        String           @db.Uuid
@@ -162,6 +192,7 @@ model sessions {
   @@schema("auth")
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model sso_domains {
   id              String        @id @db.Uuid
   sso_provider_id String        @db.Uuid
@@ -174,6 +205,7 @@ model sso_domains {
   @@schema("auth")
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model sso_providers {
   id                String              @id @db.Uuid
   resource_id       String?
@@ -186,6 +218,7 @@ model sso_providers {
   @@schema("auth")
 }
 
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model users {
   instance_id                 String?       @db.Uuid
   id                          String        @id @db.Uuid
@@ -229,24 +262,17 @@ model users {
   @@schema("auth")
 }
 
-model gridstations {
-  id         String                   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  created_at DateTime?                @default(now()) @db.Timestamptz(6)
-  updated_at DateTime?                @db.Timestamp(6)
-  name       String?
-  status     String?
-  contact    String?
-  created_by String?                  @db.Uuid
-  updated_by String?                  @db.Uuid
-  location   Unsupported("geography")
-
-  @@schema("public")
-}
-
 enum aal_level {
   aal1
   aal2
   aal3
+
+  @@schema("auth")
+}
+
+enum code_challenge_method {
+  s256
+  plain
 
   @@schema("auth")
 }
@@ -263,4 +289,18 @@ enum factor_type {
   webauthn
 
   @@schema("auth")
+}
+
+model gridstations {
+  id         String                   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  created_at DateTime?                @default(now()) @db.Timestamptz(6)
+  updated_at DateTime?                @db.Timestamp(6)
+  name       String?
+  status     String?
+  contact    String?
+  created_by String?                  @db.Uuid
+  updated_by String?                  @db.Uuid
+  location   Unsupported("geography")
+
+  @@schema("public")
 }
